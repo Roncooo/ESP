@@ -18,6 +18,7 @@ package com.example.recyclersample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -25,10 +26,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Log.v("ActivityMainTtyag", "Entered main activity")
         // Retrieves data from datasource
         val flowerList = Datasource(this).getFlowerList()
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+
         recyclerView.adapter = FlowerAdapter(flowerList)
     }
 }

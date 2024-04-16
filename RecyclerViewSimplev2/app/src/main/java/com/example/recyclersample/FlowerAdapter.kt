@@ -16,11 +16,14 @@
 
 package com.example.recyclersample
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
 
 class FlowerAdapter(private val flowerList: Array<String>) :
     RecyclerView.Adapter<FlowerAdapter.FlowerViewHolder>() {
@@ -50,5 +53,11 @@ class FlowerAdapter(private val flowerList: Array<String>) :
     // Displays data at a certain position
     override fun onBindViewHolder(holder: FlowerViewHolder, position: Int) {
         holder.bind(flowerList[position])
+        holder.itemView.setOnClickListener{view->
+            Log.v("mytag", "onclick")
+            val intent = Intent(view.context, DetailActivity::class.java)
+            intent.putExtra("flower_name", flowerList[position])
+            view.context.startActivity(intent)
+        }
     }
 }
