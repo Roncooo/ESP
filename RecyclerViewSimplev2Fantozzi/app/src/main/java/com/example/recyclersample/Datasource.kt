@@ -24,8 +24,4 @@ class Datasource(private val context: Context) {
         // Return flower list from string resources
         return context.resources.getStringArray(R.array.flower_array)
     }
-
-    fun getFlowerPhrase(): String {
-        return context.resources.getString(R.string.flower_phrase)
-    }
 }

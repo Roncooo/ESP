@@ -16,12 +16,20 @@ class DetailActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val flower_name = intent.getStringExtra("flower_name")
-        val flower_phrase = intent.getStringExtra("flower_phrase")
+        val flower_name = intent.getStringExtra(ARG_FLOWER_NAME)
 
         val detailActivityTextView: TextView = findViewById(R.id.detailActivityTextView)
-        detailActivityTextView.text = flower_name + " " + flower_phrase
+        detailActivityTextView.text = getString(R.string.flower_phrase, flower_name)
 
+    }
+
+    override fun onDestroy(){
+        super.onDestroy()
+
+    }
+
+    companion object{
+        const val ARG_FLOWER_NAME = "flower_name"
     }
 
 }

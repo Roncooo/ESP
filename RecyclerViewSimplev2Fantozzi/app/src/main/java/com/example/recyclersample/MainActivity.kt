@@ -16,16 +16,22 @@
 
 package com.example.recyclersample
 
-import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 
-class Datasource(private val context: Context) {
-    fun getFlowerList(): Array<String> {
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        // Return flower list from string resources
-        return context.resources.getStringArray(R.array.flower_array)
-    }
+        Log.v("ActivityMainTtyag", "Entered main activity")
+        // Retrieves data from datasource
+        val flowerList = Datasource(this).getFlowerList()
 
-    fun getFlowerPhrase(): String {
-        return context.resources.getString(R.string.flower_phrase)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+
+        recyclerView.adapter = FlowerAdapter(flowerList)
     }
 }

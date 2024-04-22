@@ -45,6 +45,6 @@
         <item>Dandelion</item>
     </string-array>
 
-    <string name="flower_phrase">is a nice flower</string>
+    <string name="flower_phrase">%1$s is a nice flower</string>
 
 </resources>

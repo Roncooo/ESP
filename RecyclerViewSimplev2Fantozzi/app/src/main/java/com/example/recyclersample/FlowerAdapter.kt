@@ -28,6 +28,15 @@ import androidx.recyclerview.widget.RecyclerView
 class FlowerAdapter(private val flowerList: Array<String>) :
     RecyclerView.Adapter<FlowerAdapter.FlowerViewHolder>() {
 
+    // view è l'elemento cliccato
+    private val onClickListener = View.OnClickListener {view: View ->
+        Log.v("mytag", "onclick")
+        val flower_name = (view as TextView).text.toString()
+        val intent = Intent(view.context, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.ARG_FLOWER_NAME, flower_name)
+        view.context.startActivity(intent)
+    }
+
     // Describes an item view and its place within the RecyclerView
     class FlowerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val flowerTextView: TextView = itemView.findViewById(R.id.flower_text)
@@ -42,6 +51,9 @@ class FlowerAdapter(private val flowerList: Array<String>) :
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.flower_item, parent, false)
 
+        val tv: TextView = view.findViewById(R.id.flower_text)
+        tv.setOnClickListener(onClickListener)
+
         return FlowerViewHolder(view)
     }
 
@@ -53,12 +65,5 @@ class FlowerAdapter(private val flowerList: Array<String>) :
     // Displays data at a certain position
     override fun onBindViewHolder(holder: FlowerViewHolder, position: Int) {
         holder.bind(flowerList[position])
-        holder.itemView.setOnClickListener{view->
-            Log.v("mytag", "onclick")
-            val intent = Intent(view.context, DetailActivity::class.java)
-            intent.putExtra("flower_name", flowerList[position])
-            intent.putExtra("flower_phrase", Datasource(view.context).getFlowerPhrase())
-            view.context.startActivity(intent)
-        }
     }
 }
