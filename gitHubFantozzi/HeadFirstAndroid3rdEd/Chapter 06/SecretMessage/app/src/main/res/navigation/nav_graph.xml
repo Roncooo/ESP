@@ -12,11 +12,25 @@
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_messageFragment"
-            app:destination="@id/messageFragment" />
+            app:destination="@id/messageFragment">
+        </action>
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
         android:name="com.hfad.secretmessage.MessageFragment"
         android:label="fragment_message"
-        tools:layout="@layout/fragment_message" />
+        tools:layout="@layout/fragment_message" >
+        <action
+            android:id="@+id/action_messageFragment_to_secretMessageFragment"
+            app:destination="@id/secretMessageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/secretMessageFragment"
+        android:name="com.hfad.secretmessage.SecretMessageFragment"
+        android:label="fragment_secret_message"
+        tools:layout="@layout/fragment_secret_message" >
+        <argument
+            android:name="message"
+            app:argType="string" />
+    </fragment>
 </navigation>
