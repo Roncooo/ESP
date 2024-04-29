@@ -22,7 +22,8 @@
         tools:layout="@layout/fragment_message" >
         <action
             android:id="@+id/action_messageFragment_to_secretMessageFragment"
-            app:destination="@id/secretMessageFragment" />
+            app:destination="@id/secretMessageFragment"
+            app:popUpTo="@id/welcomeFragment"/>
     </fragment>
     <fragment
         android:id="@+id/secretMessageFragment"

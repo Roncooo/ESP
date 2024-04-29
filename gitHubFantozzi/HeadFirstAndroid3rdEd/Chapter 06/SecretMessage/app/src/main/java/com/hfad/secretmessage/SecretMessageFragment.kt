@@ -15,10 +15,16 @@ class SecretMessageFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_secret_message, container, false)
+
+        /*
+        così è come l'ho fatto io
         val tv: TextView = view!!.findViewById(R.id.encrypted_message)
         val message: String? = this.arguments?.getString("message")
         Log.d("secretMessageFragment", message.toString())
-        tv.text = message?.reversed() ?: "no message inserted"
+        */
+        val message = SecretMessageFragmentArgs.fromBundle(requireArguments()).message
+        val tv = view.findViewById<TextView>(R.id.encrypted_message)
+        tv.text = message.reversed()
         return view
     }
 }
