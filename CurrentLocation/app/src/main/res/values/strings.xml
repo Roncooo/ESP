@@ -4,6 +4,6 @@
     <string name="latitude">latitude</string>
     <string name="coordinates_placeholder_error">Error</string>
     <string name="distance">The distance between you and prato della valle is</string>
-    <string name="pad_lat">45.39847548456303</string>
-    <string name="pad_lon">11.876528500000004</string>
+    <string name="distance_button">Calculate distance</string>
+    <string name="calculating">Calculating...</string>
 </resources>

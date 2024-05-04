@@ -8,6 +8,7 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -16,42 +17,46 @@ import com.google.android.gms.location.LocationServices
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var fusedLocationProviterClient: FusedLocationProviderClient
-    private lateinit var tvLatitude: TextView
-    private lateinit var tvLongitude: TextView
-    private lateinit var tvDistance: TextView
     private var producer = EventProducer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fusedLocationProviterClient = LocationServices.getFusedLocationProviderClient(this)
-        tvLatitude = findViewById<TextView>(R.id.latitude)
-        tvLongitude = findViewById<TextView>(R.id.longitude)
-        tvDistance = findViewById<TextView>(R.id.distance)
+        var tvLatitude = findViewById<TextView>(R.id.latitude)
+        var tvLongitude = findViewById<TextView>(R.id.longitude)
+        var button = findViewById<Button>(R.id.distance_button)
+
+
+        var distance = -1.1;
 
         getCurrentLocation()
 
         val listener = EventListener { location: MyLocation ->
-            Unit
+
             if (location == null) {
                 tvLatitude.text = getString(R.string.coordinates_placeholder_error)
                 tvLongitude.text = getString(R.string.coordinates_placeholder_error)
-                tvDistance.text = getString(R.string.coordinates_placeholder_error)
             } else {
                 tvLatitude.text = "${getString(R.string.latitude)}: ${location.latitude}"
                 tvLongitude.text = "${getString(R.string.longitude)}: ${location.longitude}"
 
-                var distance = location.distance(
+                distance = location.distance(
                     MyLocation(
-                        getString(R.string.pad_lat).toDouble(),
-                        getString(R.string.pad_lon).toDouble()
+                        getString(R.string.prato_della_valle_lat).toDouble(),
+                        getString(R.string.prato_della_valle_lon).toDouble()
                     )
                 )
-                tvDistance.text = "${getString(R.string.distance)}: ${distance} m"
+
             }
         }
+
+        button.setOnClickListener { view ->
+            var intent = Intent(view.context, DistanceActivity::class.java)
+            intent.putExtra("distance", distance)
+            startActivity(intent)
+        }
+
 
         producer.setEventListener(listener)
 
@@ -63,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         if (checkPermission()) {
             if (isLocationEnabled()) {
                 // actually get location
+                var fusedLocationProviterClient =
+                    LocationServices.getFusedLocationProviderClient(this)
                 var task =
                     fusedLocationProviterClient.lastLocation.addOnCompleteListener(this) { task ->
                         val location: Location? = task.result

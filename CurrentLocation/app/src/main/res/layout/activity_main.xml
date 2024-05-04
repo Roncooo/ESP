@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:padding="30dp">
         <TextView
             android:id="@+id/latitude"
             android:layout_width="match_parent"
@@ -25,11 +26,11 @@
             android:text="@string/longitude"
             android:textSize="30sp"
             android:padding="10dp"/>
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/distance_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/distance"
+            android:text="@string/distance_button"
             android:textSize="20sp"
             android:padding="10dp"/>
     </LinearLayout>
