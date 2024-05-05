@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CurrentLocation</string>
+    <string name="app_name" translatable="false">CurrentLocation</string>
     <string name="longitude">longitude</string>
     <string name="latitude">latitude</string>
     <string name="coordinates_placeholder_error">Error</string>

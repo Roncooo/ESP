@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="longitude">longitudine</string>
+    <string name="latitude">latitudine</string>
+    <string name="coordinates_placeholder_error">Errore</string>
+    <string name="distance">La distanza tra te e prato della valle è di</string>
+    <string name="distance_button">Calcola la distanza</string>
+    <string name="calculating">Calcolando...</string>
+</resources>
