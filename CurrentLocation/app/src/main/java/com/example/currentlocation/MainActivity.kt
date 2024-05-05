@@ -17,8 +17,6 @@ import com.google.android.gms.location.LocationServices
 
 class MainActivity : AppCompatActivity() {
 
-    private var producer = EventProducer()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,9 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         var distance = -1.1;
 
-        getCurrentLocation()
-
-        val listener = EventListener { location: MyLocation ->
+        getCurrentLocation{ location: MyLocation ->
 
             if (location == null) {
                 tvLatitude.text = getString(R.string.coordinates_placeholder_error)
@@ -57,12 +53,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        producer.setEventListener(listener)
-
     }
 
-    private fun getCurrentLocation(): MyLocation? {
+    private fun getCurrentLocation(lambda: (location: MyLocation)->Unit): MyLocation? {
         var myLocation: MyLocation? = null
 
         if (checkPermission()) {
@@ -78,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
                             myLocation = MyLocation(location.latitude, location.longitude)
-                            producer.triggerEvent(myLocation!!)
+                            lambda(myLocation!!)
                         }
                     }
             } else {
@@ -128,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == PERMISSION_REQUEST_LOCATION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(applicationContext, "Granted", Toast.LENGTH_SHORT).show()
-                getCurrentLocation()
+                // getCurrentLocation()
             } else {
                 Toast.makeText(applicationContext, "Denied", Toast.LENGTH_SHORT).show()
             }
