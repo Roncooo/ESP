@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WordDao {
     @Query("SELECT * FROM WORD_TABLE ORDER BY WORD ASC")
-    fun getAlphabetized(): Flow<List<Word>>
+    fun getAlphabetizedWords(): Flow<List<Word>>
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Word)
     @Query("DELETE FROM WORD_TABLE")
