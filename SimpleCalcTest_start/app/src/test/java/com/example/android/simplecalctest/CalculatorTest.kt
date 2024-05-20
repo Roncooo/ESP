@@ -72,4 +72,14 @@ class CalculatorTest {
         assertEquals(64.0, resultAdd, 0.0)
     }
 
+
+    @Test
+    fun divByZero(){
+        val resultDiv = mCalculator!!.div(32.0, 0.0)
+        assertEquals(Double.POSITIVE_INFINITY, resultDiv, 0.0)
+    }
+
+
+
+
 }
