@@ -30,6 +30,15 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            // If the exceptions thrown are problematic for the tests,
+            // you can change the behavior so that methods instead return either null or zero,
+            // depending on the return type
+            // unitTests.returnDefaultValues = true
+        }
+    }
 }
 
 dependencies {
@@ -39,6 +48,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.8.1'
+    testImplementation 'androidx.test:core:1.5.0'          // for MainActivityTestX
+    testImplementation 'androidx.test:core-ktx:1.5.0'      // for MainActivityTestX
+    testImplementation 'androidx.test.ext:junit-ktx:1.1.5' // for MainActivityTestX
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
