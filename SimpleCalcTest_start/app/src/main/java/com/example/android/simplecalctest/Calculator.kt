@@ -20,7 +20,7 @@ package com.example.android.simplecalctest
  */
 class Calculator {
     // Available operations
-    enum class Operator {ADD, SUB, DIV, MUL}
+    enum class Operator { ADD, SUB, DIV, MUL }
 
     /**
      * Addition operation
@@ -40,6 +40,7 @@ class Calculator {
      * Divide operation
      */
     fun div(firstOperand: Double, secondOperand: Double): Double {
+        require(secondOperand != 0.0) {"You cannot divide by 0"}
         return firstOperand / secondOperand
     }
 

@@ -17,7 +17,6 @@ package com.example.android.simplecalctest
 
 import android.app.Activity
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -64,7 +63,12 @@ class MainActivity : Activity() {
      * OnClick method called when the divide Button is pressed.
      */
     fun onDiv(view: View?) {
-        compute(Operator.DIV)
+        try {
+            compute(Operator.DIV)
+        } catch (iae: IllegalArgumentException){
+            Log.e(TAG, "IllegalArgumentExeption", iae)
+            mResultTextView.text = getString(R.string.computationError)
+        }
     }
 
     /**

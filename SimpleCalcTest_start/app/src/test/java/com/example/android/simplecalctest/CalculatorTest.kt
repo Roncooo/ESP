@@ -72,13 +72,15 @@ class CalculatorTest {
         assertEquals(64.0, resultAdd, 0.0)
     }
 
-
-    @Test
+    @Test(expected = IllegalArgumentException::class)
     fun divByZero(){
         val resultDiv = mCalculator!!.div(32.0, 0.0)
-        assertEquals(Double.POSITIVE_INFINITY, resultDiv, 0.0)
-    }
+        // assertEquals(Double.POSITIVE_INFINITY, resultDiv, 0.0)
 
+        // ora invece la divisione per zero lancia eccezione,
+        // dobbiamo fare un assert per vedere se viene lanciata
+        // questa si scrive nel @Test
+    }
 
 
 
