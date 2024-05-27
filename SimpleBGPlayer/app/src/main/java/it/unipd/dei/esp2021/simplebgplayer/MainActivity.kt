@@ -44,20 +44,35 @@ class MainActivity : AppCompatActivity()
             buPlay.isEnabled = true
             buStop.isEnabled = false
         }
-    }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
-    {
-        val p = grantResults[0] == PermissionChecker.PERMISSION_GRANTED
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.i(TAG, "Notification runtime permission granted: $p")
-    }
-
-    companion object
-    {
-        // Request code for the POST_NOTIFICATIONS permission
-        private const val REQUEST_CODE = 21983
-
-        // Logcat tag
-        private val TAG = MainActivity::class.simpleName
-    }
+		// devo impostare due valori di default:
+		//  - uno se savedInstance è null (quello con elvis operator)
+		//  - uno se i bundle non sono ancora stati impostati (all'interno di getBoolean)
+		buPlay.isEnabled = savedInstanceState?.getBoolean(PLAY_ENABLED, true) ?: true
+		buStop.isEnabled = savedInstanceState?.getBoolean(STOP_ENABLED, false) ?: false
+	}
+	
+	override fun onSaveInstanceState(savedInstanceState: Bundle) {
+		super.onSaveInstanceState(savedInstanceState)
+		savedInstanceState.putBoolean(PLAY_ENABLED, buPlay.isEnabled)
+		savedInstanceState.putBoolean(STOP_ENABLED, buStop.isEnabled)
+	}
+	
+	override fun onRequestPermissionsResult(
+		requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+	) {
+		val p = grantResults[0] == PermissionChecker.PERMISSION_GRANTED
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		Log.i(TAG, "Notification runtime permission granted: $p")
+	}
+	
+	companion object {
+		// Request code for the POST_NOTIFICATIONS permission
+		private const val REQUEST_CODE = 21983
+		
+		private const val PLAY_ENABLED = "play button enabled"
+		private const val STOP_ENABLED = "stop button enabled"
+		
+		// Logcat tag
+		private val TAG = MainActivity::class.simpleName
+	}
 }
