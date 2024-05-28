@@ -68,6 +68,26 @@ class MainActivity : AppCompatActivity() {
         
     }
     
+    override fun onStop() {
+        super.onStop()
+        if(running){
+            saveOffset()
+            stopwatch.stop()
+            // running = false // se ce lo metto vuol dire che riaprendo devo premere start
+                                // inoltre onStart non saprebbe se era stato fermato dall'utente oppure
+                                // da onStop, e quindi non sa se farlo ripartire o no
+        }
+    }
+    
+    override fun onStart() {
+        super.onStart()
+        if(running){
+            setBaseTime()
+            stopwatch.start()
+            offset = 0 // secondo fantozzi è inutile
+        }
+    }
+    
     override fun onSaveInstanceState(outState: Bundle) {
         // non cambia niente fare la super prima o dopo
         super.onSaveInstanceState(outState)
