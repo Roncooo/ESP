@@ -43,6 +43,37 @@ class MainActivity : AppCompatActivity() {
             // decidiamo che con reset il cronometro riparte da 0 ma non cambia lo stato di running
         }
         
+/*      COME L'HO FATTO IO
+        running = savedInstanceState?.getBoolean(RUNNING_KEY, false) ?: false
+        if(running){
+            stopwatch.base = savedInstanceState?.getLong(BASE_KEY, 0) ?: 0
+            saveOffset()
+            stopwatch.start()
+        }else{
+            offset = savedInstanceState?.getLong(OFFSET_KEY, 0) ?: 0
+            setBaseTime()
+            stopwatch.stop()
+        }*/
+        
+        // COME LO FA FANTOZZI
+        if(savedInstanceState != null){
+            offset = savedInstanceState.getLong(OFFSET_KEY)
+            running = savedInstanceState.getBoolean(RUNNING_KEY)
+            if(running){
+                stopwatch.base = savedInstanceState.getLong(BASE_KEY)
+                stopwatch.start()
+            }
+            else setBaseTime()  // non è necessaria perché base viene settata quando si clicca start
+        }
+        
+    }
+    
+    override fun onSaveInstanceState(outState: Bundle) {
+        // non cambia niente fare la super prima o dopo
+        super.onSaveInstanceState(outState)
+        outState.putLong(OFFSET_KEY, offset)
+        outState.putBoolean(RUNNING_KEY, running)
+        outState.putLong(BASE_KEY, stopwatch.base)
     }
     
     private fun saveOffset(){
@@ -54,5 +85,9 @@ class MainActivity : AppCompatActivity() {
         stopwatch.base = SystemClock.elapsedRealtime() - offset
     }
     
-    
+    companion object{
+        private const val OFFSET_KEY = "offset_key"
+        private const val BASE_KEY = "base_key"
+        private const val RUNNING_KEY = "running_key"
+    }
 }
