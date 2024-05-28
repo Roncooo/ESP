@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
         
     }
     
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         if(running){
             saveOffset()
             stopwatch.stop()
@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
     
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         if(running){
             setBaseTime()
             stopwatch.start()
