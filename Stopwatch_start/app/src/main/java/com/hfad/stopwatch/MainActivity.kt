@@ -5,39 +5,39 @@ import android.os.SystemClock
 import android.widget.Button
 import android.widget.Chronometer
 import androidx.appcompat.app.AppCompatActivity
+import com.hfad.stopwatch.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     
-    private lateinit var stopwatch: Chronometer
+    private lateinit var binding: ActivityMainBinding
+    
     private var running = false
     private var offset: Long = 0
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         
-        stopwatch = findViewById(R.id.stopwatch)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         
-        val startButton = findViewById<Button>(R.id.start_button)
-        startButton.setOnClickListener{
+        binding.startButton.setOnClickListener{
             if(!running){
                 setBaseTime()
-                stopwatch.start()
+                binding.stopwatch.start()
                 running = true
             }
         }
         
-        val pauseButton = findViewById<Button>(R.id.pause_button)
-        pauseButton.setOnClickListener{
+        binding.pauseButton.setOnClickListener{
             if(running){
                 saveOffset()
-                stopwatch.stop()
+                binding.stopwatch.stop()
                 running = false
             }
         }
         
-        val resetButton = findViewById<Button>(R.id.reset_button)
-        resetButton.setOnClickListener{
+        binding.resetButton.setOnClickListener{
             offset = 0
             setBaseTime()
             // decidiamo che con reset il cronometro riparte da 0 ma non cambia lo stato di running
@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity() {
             offset = savedInstanceState.getLong(OFFSET_KEY)
             running = savedInstanceState.getBoolean(RUNNING_KEY)
             if(running){
-                stopwatch.base = savedInstanceState.getLong(BASE_KEY)
-                stopwatch.start()
+                binding.stopwatch.base = savedInstanceState.getLong(BASE_KEY)
+                binding.stopwatch.start()
             }
             else setBaseTime()  // non è necessaria perché base viene settata quando si clicca start
         }
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         if(running){
             saveOffset()
-            stopwatch.stop()
+            binding.stopwatch.stop()
             // running = false // se ce lo metto vuol dire che riaprendo devo premere start
                                 // inoltre onStart non saprebbe se era stato fermato dall'utente oppure
                                 // da onStop, e quindi non sa se farlo ripartire o no
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if(running){
             setBaseTime()
-            stopwatch.start()
+            binding.stopwatch.start()
             offset = 0 // secondo fantozzi è inutile
         }
     }
@@ -93,16 +93,16 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putLong(OFFSET_KEY, offset)
         outState.putBoolean(RUNNING_KEY, running)
-        outState.putLong(BASE_KEY, stopwatch.base)
+        outState.putLong(BASE_KEY, binding.stopwatch.base)
     }
     
     private fun saveOffset(){
         // è il tempo da quando ho fatto partire il cronometro ad adesso
-        offset = SystemClock.elapsedRealtime() - stopwatch.base
+        offset = SystemClock.elapsedRealtime() - binding.stopwatch.base
     }
     
     private fun setBaseTime(){
-        stopwatch.base = SystemClock.elapsedRealtime() - offset
+        binding.stopwatch.base = SystemClock.elapsedRealtime() - offset
     }
     
     companion object{
